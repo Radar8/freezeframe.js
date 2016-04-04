@@ -55,6 +55,33 @@ var freezeframe = (function($) {
     context = $canvas[0].getContext('2d');
     context.drawImage($_image[0], 0, 0, image_width, image_height);
 
+    context.save();
+    context.globalAlpha = 0.7;
+
+    // circle for sign of play
+    var centerX = image_width / 2;
+    var centerY = image_height / 2;
+    var radius = centerY/3;
+    context.beginPath();
+    context.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
+    context.fillStyle = '#ffffff';
+    context.fill();
+    context.lineWidth = radius/5;
+    context.strokeStyle = '#000000';
+    context.stroke();
+
+    // triangle for sign of play 
+    var pX = centerX - radius/5;
+    var pY = centerY - radius/3;
+    context.beginPath();
+    context.moveTo(pX, pY);
+    context.lineTo(pX, pY+(radius/1.5));
+    context.lineTo(pX+(radius/1.5), pY+(radius/3));
+    context.closePath();
+    context.fillStyle = "#000000";
+    context.fill();
+    context.restore();
+
     $canvas.addClass('ff-canvas-ready').on(transitionEnd, function() {
       $(this).off(transitionEnd);
       $_image.addClass('ff-image-ready');
